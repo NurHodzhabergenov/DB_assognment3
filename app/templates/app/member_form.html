@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>{{ action }} Member</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>User:</label>
+    <select name="member_user" {% if action == 'Update' %}disabled{% endif %} required>
+        {% for user in users %}
+        <option value="{{ user.user_id }}" {% if member.member_user_id == user.user_id %}selected{% endif %}>
+            {{ user.given_name }} {{ user.surname }} ({{ user.email }})
+        </option>
+        {% endfor %}
+    </select>
+    {% if action == 'Update' %}
+    <input type="hidden" name="member_user" value="{{ member.member_user_id }}">
+    {% endif %}
+    
+    <label>House Rules:</label>
+    <textarea name="house_rules">{{ member.house_rules|default:'' }}</textarea>
+    
+    <label>Dependent Description:</label>
+    <textarea name="dependent_description">{{ member.dependent_description|default:'' }}</textarea>
+    
+    <input type="submit" value="{{ action }} Member">
+    <a href="{% url 'member_list' %}" class="btn">Cancel</a>
+</form>
+{% endblock %}
+

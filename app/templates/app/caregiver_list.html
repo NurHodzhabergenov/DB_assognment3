@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>Caregivers</h1>
+<a href="{% url 'caregiver_create' %}" class="btn">Create New Caregiver</a>
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Gender</th>
+            <th>Caregiving Type</th>
+            <th>Hourly Rate</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for caregiver in caregivers %}
+        <tr>
+            <td>{{ caregiver.caregiver_user_id }}</td>
+            <td>{{ caregiver.get_gender_display }}</td>
+            <td>{{ caregiver.get_caregiving_type_display }}</td>
+            <td>${{ caregiver.hourly_rate }}</td>
+            <td>
+                <a href="{% url 'caregiver_update' caregiver.caregiver_user_id %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'caregiver_delete' caregiver.caregiver_user_id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No caregivers found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

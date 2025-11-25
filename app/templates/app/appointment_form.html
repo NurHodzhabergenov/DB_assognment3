@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>{{ action }} Appointment</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Caregiver:</label>
+    <select name="caregiver_user" required>
+        {% for caregiver in caregivers %}
+        <option value="{{ caregiver.caregiver_user_id }}" {% if appointment.caregiver_user_id == caregiver.caregiver_user_id %}selected{% endif %}>
+            Caregiver ID: {{ caregiver.caregiver_user_id }}
+        </option>
+        {% endfor %}
+    </select>
+    
+    <label>Member:</label>
+    <select name="member_user" required>
+        {% for member in members %}
+        <option value="{{ member.member_user_id }}" {% if appointment.member_user_id == member.member_user_id %}selected{% endif %}>
+            Member ID: {{ member.member_user_id }}
+        </option>
+        {% endfor %}
+    </select>
+    
+    <label>Appointment Date:</label>
+    <input type="date" name="appointment_date" value="{{ appointment.appointment_date|default:'' }}" required>
+    
+    <label>Appointment Time:</label>
+    <input type="time" name="appointment_time" value="{{ appointment.appointment_time|default:'' }}" required>
+    
+    <label>Work Hours:</label>
+    <input type="number" name="work_hours" value="{{ appointment.work_hours|default:'' }}" required>
+    
+    <label>Status:</label>
+    <select name="status" required>
+        <option value="pending" {% if appointment.status == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="confirmed" {% if appointment.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+        <option value="declined" {% if appointment.status == 'declined' %}selected{% endif %}>Declined</option>
+    </select>
+    
+    <input type="submit" value="{{ action }} Appointment">
+    <a href="{% url 'appointment_list' %}" class="btn">Cancel</a>
+</form>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>Caregiver Management System</h1>
+<p>Select a model to manage:</p>
+<ul>
+    <li><a href="{% url 'user_list' %}">Users</a></li>
+    <li><a href="{% url 'caregiver_list' %}">Caregivers</a></li>
+    <li><a href="{% url 'member_list' %}">Members</a></li>
+    <li><a href="{% url 'address_list' %}">Addresses</a></li>
+    <li><a href="{% url 'job_list' %}">Jobs</a></li>
+    <li><a href="{% url 'jobapplication_list' %}">Job Applications</a></li>
+    <li><a href="{% url 'appointment_list' %}">Appointments</a></li>
+</ul>
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>Appointments</h1>
+<a href="{% url 'appointment_create' %}" class="btn">Create New Appointment</a>
+<table>
+    <thead>
+        <tr>
+            <th>Appointment ID</th>
+            <th>Caregiver User ID</th>
+            <th>Member User ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Work Hours</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.appointment_id }}</td>
+            <td>{{ appointment.caregiver_user_id }}</td>
+            <td>{{ appointment.member_user_id }}</td>
+            <td>{{ appointment.appointment_date }}</td>
+            <td>{{ appointment.appointment_time }}</td>
+            <td>{{ appointment.work_hours }}</td>
+            <td>{{ appointment.get_status_display }}</td>
+            <td>
+                <a href="{% url 'appointment_update' appointment.appointment_id %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'appointment_delete' appointment.appointment_id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">No appointments found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

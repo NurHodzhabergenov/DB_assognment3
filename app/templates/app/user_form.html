@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>{{ action }} User</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ user.email|default:'' }}" required>
+    
+    <label>Given Name:</label>
+    <input type="text" name="given_name" value="{{ user.given_name|default:'' }}" required>
+    
+    <label>Surname:</label>
+    <input type="text" name="surname" value="{{ user.surname|default:'' }}" required>
+    
+    <label>City:</label>
+    <input type="text" name="city" value="{{ user.city|default:'' }}" required>
+    
+    <label>Phone Number:</label>
+    <input type="text" name="phone_number" value="{{ user.phone_number|default:'' }}" required>
+    
+    <label>Profile Description:</label>
+    <textarea name="profile_description">{{ user.profile_description|default:'' }}</textarea>
+    
+    <label>Password:</label>
+    <input type="password" name="password" value="{{ user.password|default:'' }}" required>
+    
+    <input type="submit" value="{{ action }} User">
+    <a href="{% url 'user_list' %}" class="btn">Cancel</a>
+</form>
+{% endblock %}
+

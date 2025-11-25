@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>{{ action }} Address</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Member:</label>
+    <select name="member_user" {% if action == 'Update' %}disabled{% endif %} required>
+        {% for member in members %}
+        <option value="{{ member.member_user_id }}" {% if address.member_user_id == member.member_user_id %}selected{% endif %}>
+            Member ID: {{ member.member_user_id }}
+        </option>
+        {% endfor %}
+    </select>
+    {% if action == 'Update' %}
+    <input type="hidden" name="member_user" value="{{ address.member_user_id }}">
+    {% endif %}
+    
+    <label>House Number:</label>
+    <input type="text" name="house_number" value="{{ address.house_number|default:'' }}">
+    
+    <label>Street:</label>
+    <input type="text" name="street" value="{{ address.street|default:'' }}">
+    
+    <label>Town:</label>
+    <input type="text" name="town" value="{{ address.town|default:'' }}">
+    
+    <input type="submit" value="{{ action }} Address">
+    <a href="{% url 'address_list' %}" class="btn">Cancel</a>
+</form>
+{% endblock %}
+

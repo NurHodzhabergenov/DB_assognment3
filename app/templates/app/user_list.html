@@ -1,0 +1,40 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>Users</h1>
+<a href="{% url 'user_create' %}" class="btn">Create New User</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Given Name</th>
+            <th>Surname</th>
+            <th>City</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.given_name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.city }}</td>
+            <td>{{ user.phone_number }}</td>
+            <td>
+                <a href="{% url 'user_update' user.user_id %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'user_delete' user.user_id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No users found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

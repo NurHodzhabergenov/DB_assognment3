@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>Jobs</h1>
+<a href="{% url 'job_create' %}" class="btn">Create New Job</a>
+<table>
+    <thead>
+        <tr>
+            <th>Job ID</th>
+            <th>Member User ID</th>
+            <th>Required Caregiving Type</th>
+            <th>Other Requirements</th>
+            <th>Date Posted</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in jobs %}
+        <tr>
+            <td>{{ job.job_id }}</td>
+            <td>{{ job.member_user_id }}</td>
+            <td>{{ job.get_required_caregiving_type_display }}</td>
+            <td>{{ job.other_requirements|truncatewords:10|default:'N/A' }}</td>
+            <td>{{ job.date_posted|date:"Y-m-d H:i" }}</td>
+            <td>
+                <a href="{% url 'job_update' job.job_id %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'job_delete' job.job_id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No jobs found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

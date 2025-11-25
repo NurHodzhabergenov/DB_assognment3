@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>{{ action }} Job</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Member:</label>
+    <select name="member_user" required>
+        {% for member in members %}
+        <option value="{{ member.member_user_id }}" {% if job.member_user_id == member.member_user_id %}selected{% endif %}>
+            Member ID: {{ member.member_user_id }}
+        </option>
+        {% endfor %}
+    </select>
+    
+    <label>Required Caregiving Type:</label>
+    <select name="required_caregiving_type" required>
+        <option value="babysitter" {% if job.required_caregiving_type == 'babysitter' %}selected{% endif %}>Babysitter</option>
+        <option value="elderly_caregiver" {% if job.required_caregiving_type == 'elderly_caregiver' %}selected{% endif %}>Elderly Caregiver</option>
+        <option value="playmate" {% if job.required_caregiving_type == 'playmate' %}selected{% endif %}>Playmate</option>
+    </select>
+    
+    <label>Other Requirements:</label>
+    <textarea name="other_requirements">{{ job.other_requirements|default:'' }}</textarea>
+    
+    <input type="submit" value="{{ action }} Job">
+    <a href="{% url 'job_list' %}" class="btn">Cancel</a>
+</form>
+{% endblock %}
+

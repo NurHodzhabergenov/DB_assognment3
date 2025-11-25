@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>Addresses</h1>
+<a href="{% url 'address_create' %}" class="btn">Create New Address</a>
+<table>
+    <thead>
+        <tr>
+            <th>Member User ID</th>
+            <th>House Number</th>
+            <th>Street</th>
+            <th>Town</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for address in addresses %}
+        <tr>
+            <td>{{ address.member_user_id }}</td>
+            <td>{{ address.house_number|default:'N/A' }}</td>
+            <td>{{ address.street|default:'N/A' }}</td>
+            <td>{{ address.town|default:'N/A' }}</td>
+            <td>
+                <a href="{% url 'address_update' address.member_user_id %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'address_delete' address.member_user_id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No addresses found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
